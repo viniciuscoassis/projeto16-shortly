@@ -2,20 +2,31 @@ import express from "express";
 import validateAuth from "../middlewares/validateAuth.js";
 import validateUrl from "../middlewares/validateUrl.js";
 import shortenController from "../controllers/shortenController.js";
+import getId from "../controllers/getIdController.js";
 import { connection } from "../database.js";
 
 const urlRoute = express.Router();
 
-urlRoute.get("/urls/:id", async (req, res) => {
-  const { id } = req.params;
+urlRoute.get("/urls/:id", getId);
+urlRoute.get("/urls/open/:shortUrl", async (req, res) => {
+  const { shortUrl } = req.params;
 
-  const idUrl = await connection.query(
-    'SELECT id,"shortUrl",url FROM urls WHERE id = $1',
-    [id]
-  );
-  if (idUrl.rows.length == 0) return res.sendStatus(404);
+  try {
+    const urlInfo = await connection.query(
+      'SELECT * FROM urls WHERE "shortUrl" = $1',
+      [shortUrl]
+    );
+    const newVisit = Number(urlInfo.rows[0].visitsCount) + 1;
 
-  res.send(idUrl.rows[0]);
+    await connection.query('UPDATE urls SET "visitsCount"=$1 WHERE id = $2', [
+      newVisit,
+      urlInfo.rows[0].id,
+    ]);
+
+    return res.redirect(`${urlInfo.rows[0].url}`);
+  } catch (error) {
+    res.status(500).send(error);
+  }
 });
 
 urlRoute.use(validateAuth);

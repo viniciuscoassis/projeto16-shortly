@@ -2,7 +2,9 @@ import { connection } from "../database.js";
 
 const validateAuth = async (req, res, next) => {
   let token = req.headers.authorization;
-  if (!token) return res.status(401);
+
+  if (!token) return res.sendStatus(401);
+
   token = token.replace("Bearer ", "");
 
   const session = await connection.query(
