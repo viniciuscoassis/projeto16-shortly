@@ -7,7 +7,7 @@ const shortenController = async (req, res) => {
   const shortUrl = nanoid();
 
   await connection.query(
-    'INSERT INTO urls ("userId", url,"shortUrl") VALUES ($1,$2,$3)',
+    'INSERT INTO urls ("creatorId", url,"shortUrl") VALUES ($1,$2,$3)',
     [session.userId, url, shortUrl]
   );
 
