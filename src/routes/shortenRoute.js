@@ -1,16 +1,15 @@
 import express from "express";
 import validateAuth from "../middlewares/validateAuth.js";
-import isValidUrl from "../regex/isValidUrl.js";
+import validateUrl from "../middlewares/validateUrl.js";
+import { nanoid } from "nanoid";
 
 const urlRoute = express.Router();
 
 urlRoute.use(validateAuth);
 
-urlRoute.post("/urls/shorten", async (req, res) => {
-  const { url } = req.body;
-
-  if (!isValidUrl(url))
-    return res.status(422).send("campo enviado não é uma url válida");
+urlRoute.post("/urls/shorten", validateUrl, async (req, res) => {
+  const short = nanoid();
+  return res.send(short);
 });
 
 export default urlRoute;

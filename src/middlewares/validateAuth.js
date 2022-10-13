@@ -1,7 +1,9 @@
 import { connection } from "../database.js";
 
 const validateAuth = async (req, res, next) => {
-  const token = req.headers.authorization.replace("Bearer ", "");
+  let token = req.headers.authorization;
+  if (!token) return res.status(401);
+  token = token.replace("Bearer ", "");
 
   const session = await connection.query(
     "SELECT * FROM sessions WHERE token = $1",
