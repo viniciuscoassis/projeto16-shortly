@@ -9,6 +9,7 @@ const newUserSchema = Joi.object({
     })
     .required(),
   password: Joi.string().pattern(new RegExp("^[a-zA-Z0-9]{3,30}$")).required(),
+  confirmPassword: Joi.any().valid(Joi.ref("password")).required(),
 });
 
 export default newUserSchema;

@@ -5,7 +5,7 @@ const validateNewUser = async (req, res, next) => {
   const { name, email, password, confirmPassword } = req.body;
 
   const { error, value } = newUserSchema.validate(
-    { name, email, password },
+    { name, email, password, confirmPassword },
     { abortEarly: false }
   );
   if (error)
