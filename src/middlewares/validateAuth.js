@@ -10,6 +10,7 @@ const validateAuth = async (req, res, next) => {
     [token]
   );
 
+  res.locals.session = session.rows[0];
   if (session.rows.length === 0) return res.sendStatus(401);
   next();
 };
