@@ -3,8 +3,8 @@ import {
   signInFunction,
   signUpFunction,
 } from "../controllers/authControllers.js";
-import validateNewUser from "../middlewares/newUserValidation.js";
-import validateUser from "../middlewares/userLogginValidation.js";
+import validateNewUser from "../middlewares/validateNewUser.js";
+import validateUser from "../middlewares/validateUser.js";
 
 const authRoute = express.Router();
 

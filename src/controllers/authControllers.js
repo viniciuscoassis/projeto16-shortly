@@ -15,7 +15,6 @@ const signUpFunction = async (req, res) => {
 
 const signInFunction = async (req, res) => {
   const user = res.locals.user;
-
   const token = uuid();
 
   await connection.query(
