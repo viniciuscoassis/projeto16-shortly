@@ -7,8 +7,8 @@ import userRoute from "./userRoute.js";
 const Routes = express.Router();
 
 Routes.use(authRoute);
+Routes.use(rankingRoute);
 Routes.use(urlRoute);
 Routes.use(userRoute);
-Routes.use(rankingRoute);
 
 export default Routes;
