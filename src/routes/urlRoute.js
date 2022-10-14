@@ -4,28 +4,24 @@ import validateUrl from "../middlewares/validateUrl.js";
 import shortenController from "../controllers/shortenController.js";
 import getId from "../controllers/getIdController.js";
 import { connection } from "../database.js";
+import verifyShort from "../middlewares/verifyShortUrl.js";
 
 const urlRoute = express.Router();
 
 urlRoute.get("/urls/:id", getId);
-urlRoute.get("/urls/open/:shortUrl", async (req, res) => {
-  const { shortUrl } = req.params;
-
+urlRoute.get("/urls/open/:shortUrl", verifyShort, async (req, res) => {
+  const urlInfo = res.locals.urlInfo;
   try {
-    const urlInfo = await connection.query(
-      'SELECT * FROM urls WHERE "shortUrl" = $1',
-      [shortUrl]
-    );
-    const newVisit = Number(urlInfo.rows[0].visitsCount) + 1;
+    const newVisit = Number(urlInfo.visitsCount) + 1;
 
-    await connection.query('UPDATE urls SET "visitsCount"=$1 WHERE id = $2', [
+    await connection.query('UPDATE urls SET "visitsCount" = $1 WHERE id = $2', [
       newVisit,
-      urlInfo.rows[0].id,
+      urlInfo.id,
     ]);
 
-    return res.redirect(`${urlInfo.rows[0].url}`);
-  } catch (error) {
-    res.status(500).send(error);
+    return res.redirect(`${urlInfo.url}`);
+  } catch (e) {
+    return res.status(500).send(e);
   }
 });
 
