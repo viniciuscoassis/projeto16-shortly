@@ -6,9 +6,6 @@ import userRoute from "./userRoute.js";
 
 const Routes = express.Router();
 
-Routes.get("/status", (req, res) => {
-  return res.send("OLa");
-});
 Routes.use(authRoute);
 Routes.use(rankingRoute);
 Routes.use(urlRoute);
