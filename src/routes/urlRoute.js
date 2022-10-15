@@ -3,7 +3,7 @@ import validateAuth from "../middlewares/validateAuth.js";
 import validateUrl from "../middlewares/validateUrl.js";
 import shortenController from "../controllers/shortenController.js";
 import getId from "../controllers/getIdController.js";
-import { connection } from "../database.js";
+
 import verifyShort from "../middlewares/verifyShortUrl.js";
 import redirectUrl from "../controllers/redirectUrl.js";
 import verificationBeforeDelete from "../middlewares/verifyBeforeDelete.js";
