@@ -11,4 +11,6 @@ const authRoute = express.Router();
 authRoute.post("/signup", validateNewUser, signUpFunction);
 authRoute.post("/signin", validateUser, signInFunction);
 
+authRoute.delete("/logout", (req, res) => {});
+
 export default authRoute;
