@@ -18,12 +18,6 @@ https://shortlyapi-viniciuscoassis.herokuapp.com/
 
 - [@viniciuscoassis](https://github.com/viniciuscoassis)
 
-
-## Demonstration
-
-Insira um gif ou um link de alguma demonstração
-
-
 ## Functionalities
 
 - signup
